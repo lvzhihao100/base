@@ -3,6 +3,7 @@ package com.gamerole.base.core.config;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter4;
 import com.gamerole.base.core.ret.HttpResult;
 import com.gamerole.base.core.ret.RetCode;
@@ -33,7 +34,7 @@ public class WebConfigurer extends WebMvcConfigurationSupport {
      */
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        FastJsonHttpMessageConverter4 converter = new FastJsonHttpMessageConverter4();
+        FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
         converter.setSupportedMediaTypes(getSupportedMediaTypes());
         FastJsonConfig config = new FastJsonConfig();
         config.setSerializerFeatures(
@@ -141,12 +142,16 @@ public class WebConfigurer extends WebMvcConfigurationSupport {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/res/**")
-                .addResourceLocations("classpath:/static/");
-        registry.addResourceHandler("docs.html")
+        registry.addResourceHandler("swagger-ui.html")
                 .addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations("classpath:/static/");
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
+//        registry.addResourceHandler("docs.html")
+//                .addResourceLocations("classpath:/META-INF/resources/");
+//        registry.addResourceHandler("/webjars/**")
+//                .addResourceLocations("classpath:/META-INF/resources/webjars/");
         registry.addResourceHandler("/favicon.ico")
                 .addResourceLocations("classpath:/META-INF/resources/favicon.ico");
         super.addResourceHandlers(registry);

@@ -10,6 +10,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,6 +24,7 @@ import java.util.List;
 @RequestMapping("userInfo")
 @Api(tags = {"用户操作接口"}, description = "用户接口")
 public class UserInfoController {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Resource
     private UserInfoService userInfoService;
@@ -38,6 +41,10 @@ public class UserInfoController {
     })
     @PostMapping("/selectById")
     public HttpResult<UserInfo> selectById(String id) {
+        logger.error("123");
+        logger.info("123");
+        logger.debug("213");
+        logger.warn("1322");
         UserInfo userInfo = userInfoService.selectById(id);
         return HttpResponse.makeOKRsp(userInfo);
     }
